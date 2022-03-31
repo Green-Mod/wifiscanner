@@ -52,11 +52,7 @@ fn parse_iw_dev_scan(network_list: &str) -> Result<Vec<Wifi>> {
     let mut wifi = Wifi::default();
     for line in network_list.split("\n") {
         if let Ok(mac) = extract_value(line, "BSS ", Some("(")) {
-            if !wifi.mac.is_empty()
-                && !wifi.signal_level.is_empty()
-                && !wifi.channel.is_empty()
-                && !wifi.ssid.is_empty()
-            {
+            if !wifi.mac.is_empty() && !wifi.signal_level.is_empty() && !wifi.ssid.is_empty() {
                 wifis.push(wifi);
                 wifi = Wifi::default();
             }
@@ -73,11 +69,7 @@ fn parse_iw_dev_scan(network_list: &str) -> Result<Vec<Wifi>> {
     }
 
     // push the last wifi.
-    if !wifi.mac.is_empty()
-        && !wifi.signal_level.is_empty()
-        && !wifi.channel.is_empty()
-        && !wifi.ssid.is_empty()
-    {
+    if !wifi.mac.is_empty() && !wifi.signal_level.is_empty() && !wifi.ssid.is_empty() {
         wifis.push(wifi);
     }
 
@@ -134,7 +126,7 @@ mod tests {
             ssid: "hello".to_string(),
             channel: "10".to_string(),
             signal_level: "-67.00".to_string(),
-            security: "".to_string(),
+            security: "PSK".to_string(),
         });
 
         expected.push(Wifi {
@@ -142,7 +134,7 @@ mod tests {
             ssid: "hello-world-foo-bar".to_string(),
             channel: "8".to_string(),
             signal_level: "-89.00".to_string(),
-            security: "".to_string(),
+            security: "PSK".to_string(),
         });
 
         // FIXME: should be a better way to create test fixtures
